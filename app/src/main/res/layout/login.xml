@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/mail"
+        android:id="@+id/TextMail"
+        android:layout_gravity="center_horizontal"
+        android:paddingTop="50px" />
+
+    <EditText
+        android:layout_width="264dp"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:text="Mail"
+        android:ems="10"
+        android:id="@+id/editTextMail"
+        android:layout_gravity="center_horizontal"
+        android:padding="30px" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/cancelar"
+        android:id="@+id/textView2"
+        android:layout_gravity="center_horizontal"
+        android:paddingTop="50px" />
+
+    <EditText
+        android:layout_width="283dp"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:id="@+id/editTextPass"
+        android:layout_gravity="center_horizontal"
+        android:padding="30px" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/aceptar"
+        android:id="@+id/button"
+        android:layout_gravity="center_horizontal" />
+</LinearLayout>

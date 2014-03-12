@@ -36,7 +36,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mTitle = "JAVATECHIG.COM";
+        mTitle = getResources().getString(R.string.app_name);
         getActionBar().setTitle(mTitle);
 
         // Getting reference to the DrawerLayout
@@ -58,7 +58,7 @@ public class MainActivity extends Activity {
 
             /** Called when a drawer is opened */
             public void onDrawerOpened(View drawerView) {
-                getActionBar().setTitle("JAVATECHIG.COM");
+                getActionBar().setTitle(mTitle);
                 invalidateOptionsMenu();
             }
 

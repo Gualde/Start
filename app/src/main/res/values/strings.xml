@@ -2,20 +2,22 @@
 <resources>
 
     <string name="app_name">Start</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="hello_world">Hello !</string>
     <string name="action_settings">Settings</string>
 
 
     <string-array name="menus">
-        <item >Home</item>
-        <item >Android</item>
-        <item >Blackberry</item>
-        <item >J2ME</item>
-        <item >Sencha Touch</item>
-        <item >PhoneGap</item>
-        <item >Java</item>
+        <item >Start</item>
+        <item >Foro</item>
+        <item >Soporte técnico</item>
+        <item >Manual</item>
+        <item >FAQs</item>
     </string-array>
 
     <string name="drawer_open">Open Drawer</string>
     <string name="drawer_close">Close Drawer</string>
+    <string name="aceptar">Aceptar</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="mail">Correo:</string>
+    <string name="password">Contraseña</string>
 </resources>

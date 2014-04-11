@@ -45,9 +45,7 @@ public class MainActivity extends Activity {
         mDrawerList = (ListView) findViewById(R.id.drawer_list);
 
         // Getting reference to the ActionBarDrawerToggle
-        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
-                R.drawable.ic_drawer, R.string.drawer_open,
-                R.string.drawer_close) {
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.drawable.ic_drawer, R.string.drawer_open,     R.string.drawer_close) {
 
             /** Called when drawer is closed */
             public void onDrawerClosed(View view) {
@@ -84,8 +82,8 @@ public class MainActivity extends Activity {
         mDrawerList.setOnItemClickListener(new OnItemClickListener() {
 
             @Override
-            public void onItemClick(AdapterView<?> parent, View view,
-                                    int position, long id) {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+            {
 
                 // Getting an array of rivers
                 String[] menuItems = getResources().getStringArray(R.array.menus);

@@ -7,10 +7,10 @@
 
 
     <string-array name="menus">
-        <item >Start</item>
+        <item >Club Energy</item>
         <item >Foro</item>
-        <item >Soporte técnico</item>
         <item >Manual</item>
+        <item >Soporte Tecnico</item>
         <item >FAQs</item>
     </string-array>
 
@@ -20,4 +20,14 @@
     <string name="cancelar">Cancelar</string>
     <string name="mail">Correo:</string>
     <string name="password">Contraseña</string>
+
+    <string name="ubicacion">Ubicación actual:</string>
+    <string name="activar">Activar</string>
+    <string name="desactivar">Desactivar</string>
+    <string name="proveedor_estado">Estado del proveedor:</string>
+    <string name="estado">Estado</string>
+    <string name="latitud">Latitud</string>
+    <string name="longitud">Longitud</string>
+    <string name="precision">Precisión</string>
+    <string name="title_activity_greeting">Greeting</string>
 </resources>

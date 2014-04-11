@@ -1,9 +1,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="es.energysistem.start.MainActivity" >
+    tools:context="es.energysistem.start.Start" >
     
     <item android:id="@+id/action_settings"
         android:title="@string/action_settings"
         android:orderInCategory="100"
         android:showAsAction="never" />
+
+
+    <item
+        android:id="@+id/action_search"
+        android:orderInCategory="100"
+        android:title="action_search"/>
 </menu>

@@ -3,6 +3,7 @@ package es.energysistem.start;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,7 +24,6 @@ public class Start extends ActionBarActivity {
     private DrawerLayout drawerLayout;
     private ListView drawerList;
     private ActionBarDrawerToggle drawerToggle;
-
     private CharSequence tituloSeccion;
     private CharSequence tituloApp;
 
@@ -32,7 +32,8 @@ public class Start extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
 
-        opcionesMenu = new String[] {"Opción 1", "Opción 2", "Opción 3"};
+        opcionesMenu = new String[]{};
+        opcionesMenu =  getResources().getStringArray(R.array.menus);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawerList = (ListView) findViewById(R.id.left_drawer);
 
@@ -42,11 +43,10 @@ public class Start extends ActionBarActivity {
 
         drawerList.setOnItemClickListener(new OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view,
-                                    int position, long id) {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 Fragment fragment = null;
-
+                Log.e("LogDebug", String.valueOf(position));
                 switch (position) {
                     case 0:
                         fragment = new FragmentClub();

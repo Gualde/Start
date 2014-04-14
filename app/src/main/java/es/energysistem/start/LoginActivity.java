@@ -313,7 +313,7 @@ public class LoginActivity extends Activity {
     
     private void arrancarServicio()
     {
-    	Intent j = new Intent(this, Greeting.class);
+    	Intent j = new Intent(this, Start.class);
     	startActivity(j);
     	Intent i = new Intent(this, UbicationService.class);
     	startService(i);

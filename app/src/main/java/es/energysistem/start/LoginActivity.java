@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -63,17 +64,24 @@ public class LoginActivity extends Activity {
 	private View mLoginFormView;
 	private View mLoginStatusView;
 	private TextView mLoginStatusMessageView;
-	
+
+
+    private SQLiteDatabase db;
+
+
+
 	LocationManager gestorLocalizacion;	//ELIMINAR
 	LocationListener locEscuchador;		//ELIMINAR
 
+    /*BBDD usdbh = new BBDD(this, "DBUsuarios", null, 1);
+    SQLiteDatabase db = usdbh.getWritableDatabase();*/
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_login);
 
-		// Set up the login form.
+        // Set up the login form.
 		mEmail = getIntent().getStringExtra(EXTRA_EMAIL);
 		mEmailView = (EditText) findViewById(R.id.email);
 		mEmailView.setText(mEmail);
@@ -95,6 +103,24 @@ public class LoginActivity extends Activity {
 		mLoginStatusView = findViewById(R.id.login_status);
 		mLoginStatusMessageView = (TextView) findViewById(R.id.login_status_message);
 
+
+        BBDD usdbh = new BBDD(this, "DBUsuarios", null, 1);
+        db = usdbh.getWritableDatabase();
+
+        //comprobar si ya existe el usuario en la BBDD
+        String usuario=comprobarUsuarioEnBD();
+        if (usuario.compareTo("1")==0) {
+            //Si ya existe un usuario, abro la aplicación principal
+            Intent j = new Intent(this, Start.class);
+            startActivity(j);
+            Intent i = new Intent(this, UbicationService.class);
+            startService(i);
+        }
+
+
+
+
+
 		findViewById(R.id.sign_in_button).setOnClickListener(
 				new View.OnClickListener() {
 					@Override
@@ -102,6 +128,8 @@ public class LoginActivity extends Activity {
 						attemptLogin();
 					}
 				});
+
+
 	}
 
 	@Override
@@ -213,7 +241,10 @@ public class LoginActivity extends Activity {
 		}
 	}
 
-	/**
+
+
+
+    /**
 	 * Represents an asynchronous login/registration task used to authenticate
 	 * the user.
 	 */
@@ -320,17 +351,35 @@ public class LoginActivity extends Activity {
     }
     
     private void insertarUsuarioEnBD(String usuario)
-	{ 
+	{
+
     	Log.i("LogDebug", "Se ha insertado: " + usuario);
-        BBDD usdbh = new BBDD(this, "DBUsuarios", null, 1);
-        SQLiteDatabase db = usdbh.getWritableDatabase();
+
  
         if(db != null)
         {
             //Insertamos los datos en la tabla Usuarios
             db.execSQL("INSERT INTO Usuario (user, id) VALUES ('ADMIN', '" + usuario +"')");
             //Cerramos la base de datos
-            db.close();
+            //db.close();
         }
 	}
+    private String comprobarUsuarioEnBD()
+    {
+        String resultado="";
+        Cursor c = db.rawQuery("SELECT count (*) FROM usuario" , null);
+
+        if (c.moveToFirst()) {
+            //Recorremos el cursor hasta que no haya más registros
+            do
+            {
+                resultado = c.getString(0);
+
+
+            } while(c.moveToNext());
+        }
+        Log.i("LogDebug", "Existen: " + c.getCount()+" en el sistema");
+
+        return resultado;
+    }
 }

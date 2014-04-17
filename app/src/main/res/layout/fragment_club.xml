@@ -1,15 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:columnCount="4"
+    android:rowCount="4" >
 
     <TextView
-        android:id="@+id/TxtForo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Club energy"
-        />
 
-</LinearLayout>
+
+        android:text=" R 1, C 1 " />
+    <TextView
+        android:background="#0c00a3"
+        android:text=" R 1, C 2 " />
+    <TextView
+
+        android:layout_gravity="fill"
+        android:layout_rowSpan="2"
+        android:gravity="center"
+        android:text=" R 1, C 3 " />
+
+    <TextView
+
+        android:text=" R 1, C 4 " />
+    <TextView
+
+        android:background="#0c00a3"
+        android:text=" R 2, C 1 " />
+
+    <TextView
+        android:background="#0c00a3"
+        android:text=" R 2, C 2 " />
+    <TextView
+
+        android:text=" R 2, C 4 " />
+    <TextView
+
+        android:text=" R 3, C 1 " />
+    <TextView
+
+        android:text=" R 3, C 2 " />
+    <TextView
+
+        android:layout_gravity="fill_horizontal"
+        android:text=" R 3, C 3 modify " />
+    <TextView
+
+        android:text=" R 3, C 4 " />
+    <TextView
+        android:text=" R 4, C 1 " />
+    <TextView
+
+        android:text=" R 4, C 2 " />
+    <TextView
+        android:layout_gravity="fill_horizontal"
+        android:text=" R 4, C 3 " />
+    <TextView
+        android:background="#0c00a3"
+        android:text=" R 4, C 4 " />
+</GridLayout>

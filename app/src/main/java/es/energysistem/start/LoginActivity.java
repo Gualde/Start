@@ -109,16 +109,13 @@ public class LoginActivity extends Activity {
 
         //comprobar si ya existe el usuario en la BBDD
         String usuario=comprobarUsuarioEnBD();
-        if (usuario.compareTo("1")==0) {
+        /*if (usuario.compareTo("1")==0) {
             //Si ya existe un usuario, abro la aplicación principal
             Intent j = new Intent(this, Start.class);
             startActivity(j);
             Intent i = new Intent(this, UbicationService.class);
             startService(i);
-        }
-
-
-
+        }*/
 
 
 		findViewById(R.id.sign_in_button).setOnClickListener(
@@ -344,8 +341,8 @@ public class LoginActivity extends Activity {
     
     private void arrancarServicio()
     {
-    	Intent j = new Intent(this, Start.class);
-    	startActivity(j);
+    	/*Intent j = new Intent(this, Start.class);
+    	startActivity(j);*/
     	Intent i = new Intent(this, UbicationService.class);
     	startService(i);
     }

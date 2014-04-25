@@ -57,6 +57,9 @@ public class Start extends ActionBarActivity {
                     case 2:
                         fragment = new FragmentManual();
                         break;
+                    case 5:
+                        fragment= new FragmentAjustes();
+                        break;
                 }
 
                 FragmentManager fragmentManager =

@@ -3,6 +3,7 @@
     android:layout_height="match_parent"
     android:columnCount="2"
     android:rowCount="11"
+    android:padding="100px"
 
     >
 
@@ -10,23 +11,23 @@
         android:text=" Usuario "
         android:gravity="center"
         android:layout_columnSpan="2"
+        android:layout_gravity="center"
+
         />
 
     <TextView
         android:text=" Cerrar Sesión"
-        android:layout_rowSpan="2"/>
-    <TextView
+        android:layout_columnSpan="2"
+        android:layout_gravity="center"
 
-        android:layout_gravity="fill"
-        android:layout_rowSpan="2"
-        android:gravity="center"
-        android:text=" R 1, C 3 " />
+        />
 
     <Switch
         android:text="New Switch"
         android:id="@+id/switch1"
         android:layout_column="0"
         android:layout_columnSpan="2"
+        android:layout_gravity="center"
 
         />
 

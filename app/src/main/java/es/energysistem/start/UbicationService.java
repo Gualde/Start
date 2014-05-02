@@ -51,6 +51,7 @@ public class UbicationService extends IntentService
 	{
 		super(UbicationService.class.getSimpleName());
 	}
+//stopService(intentMyIntentService);
 
 	@Override
 	protected void onHandleIntent(Intent intent)
@@ -60,7 +61,7 @@ public class UbicationService extends IntentService
 		//Saca el usuario de la BD interna de Android
 		idUsuario = sacarIdUsuarioBD();
 		
-		Log.e("LogDebug", "Usuario: " + idUsuario + " Num: " + numEnvios);
+		Log.e("LogDebug", "Usuario: " + idUsuario + " Num: " + numEnvios +" Envios");
 		
 		localizar();
 		
@@ -84,22 +85,25 @@ public class UbicationService extends IntentService
 			Log.e("Error", "Error al recibir respuesta del Servidor.", e);
 		}
 
-		//Despu�s, programa el pr�ximo env�o.
+		//Despues, programa el proximo env�o.
 		scheduleNextUpdate();
 	}
 
 	private void scheduleNextUpdate()
 	{
 	    Intent intent = new Intent(this, this.getClass());
-	    PendingIntent pendingIntent =
-	        PendingIntent.getService(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+	    PendingIntent pendingIntent = PendingIntent.getService(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
 	    long currentTimeMillis = System.currentTimeMillis();
 	    long nextUpdateTimeMillis = currentTimeMillis + timeout * DateUtils.MINUTE_IN_MILLIS;
 	    Time nextUpdateTime = new Time();
 	    nextUpdateTime.set(nextUpdateTimeMillis);
-	    
-	    AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Log.e("LogDebug", "Tiempo proximo lanzamiento: " + String.valueOf(nextUpdateTimeMillis));
+        Log.e("LogDebug", "Tiempo currentTimeMillis:   " + String.valueOf(currentTimeMillis));
+        Log.e("LogDebug", "Tiempo  DateUtils.MINUTE_IN_MILLIS: " + String.valueOf(DateUtils.MINUTE_IN_MILLIS));
+
+
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 	    alarmManager.set(AlarmManager.RTC, nextUpdateTimeMillis, pendingIntent);
 	}
 		
@@ -111,7 +115,7 @@ public class UbicationService extends IntentService
     	
     	Location localizacion;
     	
-    	//Obtenemos la �ltima posici�n conocida
+    	//Obtenemos la �ltima posicion conocida
     	if (gestorLocalizacion.isProviderEnabled(LocationManager.GPS_PROVIDER))
     	{
     		localizacion = gestorLocalizacion.getLastKnownLocation(LocationManager.GPS_PROVIDER);
@@ -121,10 +125,10 @@ public class UbicationService extends IntentService
     		localizacion = gestorLocalizacion.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
     	}
     	
-    	//Mostramos la �ltima posici�n conocida
+    	//Mostramos la ultima posicion conocida
     	updateUbication(localizacion);
     	
-    	//Nos registramos para recibir actualizaciones de la posici�n
+    	//Nos registramos para recibir actualizaciones de la posicion
     	locEscuchador = new LocationListener() {
 	    	public void onLocationChanged(Location localizacion) {
 	    		updateUbication(localizacion);
@@ -140,11 +144,11 @@ public class UbicationService extends IntentService
 	    	}
     	};
     	
-    	//Si el GPS est� habilitado, usa la ubicaci�n del GPS
+    	//Si el GPS est� habilitado, usa la ubicacion del GPS
     	if (gestorLocalizacion.isProviderEnabled(LocationManager.GPS_PROVIDER))
     		gestorLocalizacion.requestLocationUpdates(
 	    			LocationManager.GPS_PROVIDER, 30000, 0, locEscuchador);
-    	else //Si no, utiliza la ubicaci�n de la red m�vil.
+    	else //Si no, utiliza la ubicacion de la red movil.
 	    	gestorLocalizacion.requestLocationUpdates(
 	    			LocationManager.NETWORK_PROVIDER, 30000, 0, locEscuchador);
     }
@@ -170,6 +174,7 @@ public class UbicationService extends IntentService
 	    nameValuePairs.add(new BasicNameValuePair("longitude", String.valueOf(longitud)));
 	    nameValuePairs.add(new BasicNameValuePair("accuracy", String.valueOf(precision)));
 	    Log.e("LogDebug", "Ubicaci�n enviada: " + nameValuePairs.toString());
+        numEnvios++;
 	    return nameValuePairs;
     }
 	

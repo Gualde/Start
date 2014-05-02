@@ -3,7 +3,7 @@
 
     <string name="app_name">Start</string>
     <string name="hello_world">Hello !</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Ajustes</string>
 
     <string-array name="menus">
         <item>Club Energy</item>

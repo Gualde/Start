@@ -7,4 +7,10 @@
         android:orderInCategory="100"
         android:showAsAction="never" />
 
+
+    <item
+        android:id="@+id/action_search"
+        android:orderInCategory="100"
+        android:title="action_search"/>
+
 </menu>

@@ -1,14 +1,8 @@
 package es.energysistem.start;
 
-
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.preference.PreferenceFragment;
-import android.preference.PreferenceManager;
-import android.support.v4.app.ActionBarDrawerToggle;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -19,6 +13,8 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Toast;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
@@ -64,7 +60,8 @@ public class Start extends ActionBarActivity {
                         fragment = new FragmentManual();
                         break;
                     case 5:
-
+                        Intent intent = new Intent(this, FragmentActivity.class);
+                        startActivity(intent);
                         break;
                 }
 
@@ -120,13 +117,22 @@ public class Start extends ActionBarActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        if (drawerToggle.onOptionsItemSelected(item))
-        {
-
-
+        if (drawerToggle.onOptionsItemSelected(item)) {
             return true;
-
         }
+
+        switch(item.getItemId())
+        {
+            case R.id.action_settings:
+                Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show();;
+                break;
+            case R.id.action_search:
+                Toast.makeText(this, "Search", Toast.LENGTH_SHORT).show();
+                break;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
         return true;
     }
 
@@ -136,9 +142,9 @@ public class Start extends ActionBarActivity {
         boolean menuAbierto = drawerLayout.isDrawerOpen(drawerList);
 
         if(menuAbierto)
-            menu.findItem(R.id.action_settings).setVisible(false);
+            menu.findItem(R.id.action_search).setVisible(false);
         else
-            menu.findItem(R.id.action_settings).setVisible(true);
+            menu.findItem(R.id.action_search).setVisible(true);
 
         return super.onPrepareOptionsMenu(menu);
     }

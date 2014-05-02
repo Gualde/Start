@@ -1,6 +1,8 @@
 package es.energysistem.start;
 
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 
 import android.preference.PreferenceFragment;
@@ -11,14 +13,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 
-public class FragmentSettings extends PreferenceFragment {
+public class FragmentSettings extends Activity {
 
 
-    @Override
-    public void onCreate(Bundle saveInstanceState)
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        super.onCreate(saveInstanceState);
-        addPreferencesFromResource(R.xml.settings);
-    }
+        return inflater.inflate(R.layout.fragment_settings,container, false);
 
+
+
+    }
 }
+

@@ -3,7 +3,6 @@ package es.energysistem.start;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,6 +18,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
+
+
 
 public class Start extends ActionBarActivity {
 
@@ -60,7 +61,7 @@ public class Start extends ActionBarActivity {
                         fragment = new FragmentManual();
                         break;
                     case 5:
-                        Intent intent = new Intent(this, FragmentActivity.class);
+                        Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
                         startActivity(intent);
                         break;
                 }

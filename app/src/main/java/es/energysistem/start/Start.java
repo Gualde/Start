@@ -65,7 +65,8 @@ public class Start extends ActionBarActivity {
                         startActivity(intent);
                         break;
                 }
-
+                if (position==5)
+                    return;
                 FragmentManager fragmentManager =
                         getSupportFragmentManager();
 

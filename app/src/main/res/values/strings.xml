@@ -31,4 +31,7 @@
     <string name="title_activity_greeting">Greeting</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <string name="AlertTitle">Connexion</string>
+    <string name="textAlert">No hay conexión a Internet</string>
+
 </resources>

@@ -4,11 +4,9 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.location.LocationListener;
-import android.location.LocationManager;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -20,7 +18,6 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
-
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
@@ -30,7 +27,6 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,17 +60,9 @@ public class MainActivity extends Activity {
 	private View mLoginFormView;
 	private View mLoginStatusView;
 	private TextView mLoginStatusMessageView;
+    private SharedPreferences prefs;
 
 
-    private SQLiteDatabase db;
-
-
-
-	LocationManager gestorLocalizacion;	//ELIMINAR
-	LocationListener locEscuchador;		//ELIMINAR
-
-    /*BBDD usdbh = new BBDD(this, "DBUsuarios", null, 1);
-    SQLiteDatabase db = usdbh.getWritableDatabase();*/
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -102,20 +90,8 @@ public class MainActivity extends Activity {
 		mLoginFormView = findViewById(R.id.login_form);
 		mLoginStatusView = findViewById(R.id.login_status);
 		mLoginStatusMessageView = (TextView) findViewById(R.id.login_status_message);
+        prefs= getSharedPreferences("PreferenciasStart", Context.MODE_PRIVATE);
 
-
-        BBDD usdbh = new BBDD(this, "DBUsuarios", null, 1);
-        db = usdbh.getWritableDatabase();
-
-        //comprobar si ya existe el usuario en la BBDD
-        String usuario=comprobarUsuarioEnBD();
-        if (usuario.compareTo("0")==1) {
-            //Si ya existe un usuario, abro la aplicación principal
-            Intent j = new Intent(this, Start.class);
-            startActivity(j);
-            Intent i = new Intent(this, UbicationService.class);
-            startService(i);
-        }
 
 
 		findViewById(R.id.sign_in_button).setOnClickListener(
@@ -250,8 +226,8 @@ public class MainActivity extends Activity {
 		@Override
 		protected Boolean doInBackground(Void... params) {
 
-			//Creamos un nuevo objeto HttpClient que ser� el encargado de realizar la
-			//comunicaci�n HTTP con el servidor a partir de los datos que le damos.
+			//Creamos un nuevo objeto HttpClient que será el encargado de realizar la
+			//comunicación HTTP con el servidor a partir de los datos que le damos.
 			HttpClient comunicacion = new DefaultHttpClient();
 			
 			//Creamos una peticion POST indicando la URL de llamada al servicio.
@@ -301,7 +277,13 @@ public class MainActivity extends Activity {
                 {	//El Login es correcto
                     Log.e("LogDebug", "true");
                     idUsuario = respuestaJSON.getString("userId");
-                    insertarUsuarioEnBD(idUsuario);
+
+                    //sustituido por sharedpreferences
+                    //insertarUsuarioEnBD(idUsuario);
+                    SharedPreferences.Editor editor= prefs.edit();
+                    editor.putBoolean("primera_vez",false);
+                    editor.putString("id_usuario",idUsuario);
+                    editor.commit();
                     return true;
 				}
 				else
@@ -343,40 +325,6 @@ public class MainActivity extends Activity {
     {
     	Intent j = new Intent(this, Start.class);
     	startActivity(j);
-    	Intent i = new Intent(this, UbicationService.class);
-    	startService(i);
     }
-    
-    private void insertarUsuarioEnBD(String usuario)
-	{
 
-    	Log.i("LogDebug", "Se ha insertado: " + usuario);
-
- 
-        if(db != null)
-        {
-            //Insertamos los datos en la tabla Usuarios
-            db.execSQL("INSERT INTO Usuario (user, id) VALUES ('ADMIN', '" + usuario +"')");
-            //Cerramos la base de datos
-            //db.close();
-        }
-	}
-    private String comprobarUsuarioEnBD()
-    {
-        String resultado="";
-        Cursor c = db.rawQuery("SELECT count (*) FROM usuario" , null);
-
-        if (c.moveToFirst()) {
-            //Recorremos el cursor hasta que no haya más registros
-            do
-            {
-                resultado = c.getString(0);
-
-
-            } while(c.moveToNext());
-        }
-        Log.i("LogDebug", "Existen: " + c.getCount()+" en el sistema");
-
-        return resultado;
-    }
 }

@@ -5,8 +5,7 @@ import android.app.IntentService;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
+import android.content.SharedPreferences;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -14,7 +13,6 @@ import android.os.Bundle;
 import android.text.format.DateUtils;
 import android.text.format.Time;
 import android.util.Log;
-
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
@@ -45,8 +43,10 @@ public class UbicationService extends IntentService
 	private String idUsuario;
 	private int timeout = 1;
 	private int numEnvios = 0;
-	
-	//Constructor
+    private SharedPreferences prefs;
+
+
+    //Constructor
 	public UbicationService()
 	{
 		super(UbicationService.class.getSimpleName());
@@ -56,13 +56,21 @@ public class UbicationService extends IntentService
 	@Override
 	protected void onHandleIntent(Intent intent)
 	{
+
+//        if(!prefs.getBoolean("permitir_ubicacion", false))
+//        {
+
+            Log.e("LogDebug", "Cierra el servicio");
+            //cierra el IntentService
+                this.stopSelf();
+
+//        }
 		Log.e("LogDebug", "Se ha arrancado el Servicio!");
 		
-		//Saca el usuario de la BD interna de Android
-		idUsuario = sacarIdUsuarioBD();
-		
+		//Saca el usuario de las preferencias de Android
+        prefs= getSharedPreferences("PreferenciasStart", Context.MODE_PRIVATE);
+        idUsuario=prefs.getString("id_usuario",idUsuario);
 		Log.e("LogDebug", "Usuario: " + idUsuario + " Num: " + numEnvios +" Envios");
-		
 		localizar();
 		
 		//Env�a la ubicaci�n al Servidor.
@@ -110,8 +118,7 @@ public class UbicationService extends IntentService
 	private void localizar()
     {
     	//Obtenemos una referencia al LocationManager
-    	gestorLocalizacion = 
-    		(LocationManager)getSystemService(Context.LOCATION_SERVICE);
+    	gestorLocalizacion = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
     	
     	Location localizacion;
     	
@@ -177,22 +184,7 @@ public class UbicationService extends IntentService
         numEnvios++;
 	    return nameValuePairs;
     }
-	
-	private String sacarIdUsuarioBD() 
-	{
-		BBDD usdbh = new BBDD(this, "DBUsuarios", null, 1);
-        SQLiteDatabase db = usdbh.getReadableDatabase();
-        String idUser = "";
- 
-        if(db != null)
-        {
-			Cursor cursor = db.rawQuery("SELECT * FROM Usuario", null);
-			cursor.moveToFirst();
-			idUser = cursor.getString(1);
-        }
-        
-		return idUser;
-	}
+
 }
 
 

@@ -1,5 +1,6 @@
 package es.energysistem.start;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
 
@@ -11,10 +12,16 @@ import android.preference.PreferenceFragment;
  */
 public class PreferenciasFragment extends PreferenceFragment {
 
+    private SharedPreferences prefs;
+
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+        this.getPreferenceManager().setSharedPreferencesName("PreferenciasStart");
+
         addPreferencesFromResource(R.xml.settings);
+
+
 
     }
 

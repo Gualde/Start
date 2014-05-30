@@ -1,6 +1,8 @@
 package es.energysistem.start;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,7 +22,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 
 
-
 public class Start extends ActionBarActivity {
 
     private String[] opcionesMenu;
@@ -29,6 +30,8 @@ public class Start extends ActionBarActivity {
     private ActionBarDrawerToggle drawerToggle;
     private CharSequence tituloSeccion;
     private CharSequence tituloApp;
+    private SharedPreferences prefs;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +46,9 @@ public class Start extends ActionBarActivity {
         drawerList.setAdapter(new ArrayAdapter<String>(
                 getSupportActionBar().getThemedContext(),
                 android.R.layout.simple_list_item_1, opcionesMenu));
+        prefs= getSharedPreferences("PreferenciasStart", Context.MODE_PRIVATE);
+
+
 
         drawerList.setOnItemClickListener(new OnItemClickListener() {
             @Override
@@ -75,13 +81,28 @@ public class Start extends ActionBarActivity {
                         .commit();
 
                 drawerList.setItemChecked(position, true);
-
                 tituloSeccion = opcionesMenu[position];
                 getSupportActionBar().setTitle(tituloSeccion);
-
                 drawerLayout.closeDrawer(drawerList);
+
+                //arranca servicio de ubicación
+                //Log.e("LogDebug", "Llamo a arrancar el servicio");
+
+                if(prefs.getBoolean("permitir_ubicacion", false))
+                {
+                    Log.e("LogDebug", "Llamo a arrancar el servicio");
+                    arrancarServicio();
+                }
+                else
+                {
+                    Log.e("LogDebug", "No arranco el servicio");
+
+                }
+                //
+                // arrancarServicio();
             }
         });
+
 
         tituloSeccion = getTitle();
         tituloApp = getTitle();
@@ -95,6 +116,7 @@ public class Start extends ActionBarActivity {
             public void onDrawerClosed(View view) {
                 getSupportActionBar().setTitle(tituloSeccion);
                 ActivityCompat.invalidateOptionsMenu(Start.this);
+
             }
 
             public void onDrawerOpened(View drawerView) {
@@ -107,6 +129,8 @@ public class Start extends ActionBarActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+
+
     }
 
     @Override
@@ -123,20 +147,19 @@ public class Start extends ActionBarActivity {
             return true;
         }
 
-        switch(item.getItemId())
-        {
-            case R.id.action_settings:
-                Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show();;
-                break;
-            case R.id.action_search:
-                Toast.makeText(this, "Search", Toast.LENGTH_SHORT).show();
-                break;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
 
         return true;
     }
+
+
+    private void arrancarServicio()
+    {
+        //Comprueba si el usuario quiere compartir la ubic
+        Intent i = new Intent(this, UbicationService.class);
+        startService(i);
+    }
+
+
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
@@ -162,4 +185,5 @@ public class Start extends ActionBarActivity {
         super.onConfigurationChanged(newConfig);
         drawerToggle.onConfigurationChanged(newConfig);
     }
+
 }
